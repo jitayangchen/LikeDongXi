@@ -3,13 +3,13 @@ require_once('function.php');
 
 $con = connectDB();
 
-$res = mysql_query("select * from goods", $con);
+$result = mysql_query("select * from goods order by id desc", $con);
 
 $goodsList = array();
 
 $i = 0;
 
-while($row = mysql_fetch_array($res))
+while($row = mysql_fetch_array($result))
 {
 	$goodsId = $row['id'];
 	$price = $row['price'];
@@ -22,7 +22,7 @@ while($row = mysql_fetch_array($res))
 	$commentNumber = $row['comment_number'];
 	$goodsImageUrl = $row['goods_image_url'];
 	$goodsName = mb_convert_encoding($row['goods_name'], "UTF-8", "GBK");
-
+	//echo 'goodsId = ' . $goodsId . '<br/>';
 	$goodsArr = array('goodsId' => $goodsId, 
 		'price' => $price,
 		'goodsUrl' => $goodsUrl,
@@ -37,9 +37,10 @@ while($row = mysql_fetch_array($res))
 
 	$goodsList[$i++] = $goodsArr;
 }
+$totalCount = mysql_num_rows($result);
 
 mysql_close($con);
 
-echo json_encode(array('status' => 'OK', 'goodsList' => $goodsList));
+echo json_encode(array('status' => 'OK', 'totalCount' => $totalCount, 'goodsList' => $goodsList));
 
 ?>

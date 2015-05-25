@@ -15,12 +15,12 @@ function connectDB()
 	}
 	mysql_select_db("qdm163657130_db", $con);
 
-	$res = mysql_query("select * from goods");
+	$res = mysql_query("select * from goods order by id desc");
 	while($row = mysql_fetch_array($res))
 	{
 		//echo $row['post_content'];
-		echo mb_convert_encoding($row['goods_name'], "UTF-8", "GBK");
-		echo '<br/>';
+		echo $row['id'] . ' ------ ' . mb_convert_encoding($row['goods_name'], "UTF-8", "GBK");
+		echo '<br/><br/>';
 	}
 	
 	mysql_close($con);
