@@ -13,9 +13,9 @@ function connectDB()
 }
 
 // 生成Token
-function createUserToken($phoneNumber, $passWord)
+function createUserToken($phoneNumber, $password)
 {
-	$str = $phoneNumber . '_' . $passWord . '_' . time() . '_' . rand(1000,10000);
+	$str = $phoneNumber . '_' . $password . '_' . time() . '_' . rand(1000,10000);
 	$token = md5(base64_decode($str));
 	return $token;
 }
