@@ -15,7 +15,7 @@ function connectDB()
 	}
 	mysql_select_db("qdm163657130_db", $con);
 
-	$res = mysql_query("select * from goods order by id desc");
+	$res = mysql_query("select * from goods order by create_time desc");
 	while($row = mysql_fetch_array($res))
 	{
 		//echo $row['post_content'];
@@ -24,6 +24,7 @@ function connectDB()
 	}
 	
 	mysql_close($con);
+	mysql_free_result($res);
 }
 
 connectDB();

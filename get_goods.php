@@ -40,6 +40,7 @@ while($row = mysql_fetch_array($result))
 $totalCount = mysql_num_rows($result);
 
 mysql_close($con);
+mysql_free_result($result);
 
 echo json_encode(array('status' => 'OK', 'totalCount' => $totalCount, 'goodsList' => $goodsList));
 
