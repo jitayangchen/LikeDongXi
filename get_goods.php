@@ -3,7 +3,8 @@ require_once('function.php');
 
 $con = connectDB();
 
-$result = mysql_query("select * from goods order by id desc", $con);
+$sql = "select * from goods order by id desc";
+$result = mysql_query($sql, $con);
 
 $goodsList = array();
 
@@ -42,6 +43,6 @@ $totalCount = mysql_num_rows($result);
 mysql_close($con);
 mysql_free_result($result);
 
-echo json_encode(array('status' => 'OK', 'totalCount' => $totalCount, 'goodsList' => $goodsList));
+echo json_encode(array('status' => '1', 'totalCount' => $totalCount, 'goodsList' => $goodsList));
 
 ?>
