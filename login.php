@@ -1,5 +1,6 @@
 <?php
 require_once('function.php');
+require_once('config.php');
 
 function updateToken($con, $id, $token)
 {
@@ -18,7 +19,9 @@ function login($con, $phoneNumber, $password)
 	if($row = mysql_fetch_array($res))
 	{
 		$id = $row['id'];
-		$userId = $id + 1000000;
+
+		global $USER_ID_BASE;
+		$userId = $USER_ID_BASE + $id;
 
 		if(0 == strcmp($password, $row['password']))
 		{
@@ -41,13 +44,17 @@ function login($con, $phoneNumber, $password)
 
 $phoneNumber = $_POST["phone_number"];
 $password = $_POST["password"];
-if (isset($phoneNumber) && isset($password))
+if (isset($phoneNumber) && !empty($phoneNumber) && isset($password) && !empty($password))
 {
 	$con = connectDB();
 
 	login($con, $phoneNumber, $password);
 
 	mysql_close($con);
+}
+else
+{
+	echo json_encode(array('status' => '4', 'error' => 'phoneNumber or password null'));
 }
 	
 ?>

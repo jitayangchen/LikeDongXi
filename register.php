@@ -1,5 +1,6 @@
 <?php
 require_once('function.php');
+require_once("config.php");
 
 // 用户注册 添加用户
 function addUser($con, $phoneNumber, $password, $city, $registerTime, $loginTime, $token, $tokenCreateTime)
@@ -12,7 +13,7 @@ function addUser($con, $phoneNumber, $password, $city, $registerTime, $loginTime
 $phoneNumber = $_POST["phone_number"];
 $password = $_POST["password"];
 
-if (isset($phoneNumber) && isset($password)) 
+if (isset($phoneNumber) && !empty($phoneNumber) && isset($password) && !empty($password)) 
 {
 	$con = connectDB();
 
@@ -23,11 +24,17 @@ if (isset($phoneNumber) && isset($password))
 	$tokenCreateTime = $registerTime;
 	addUser($con, $phoneNumber, $password, $city, $registerTime, $loginTime, $token, $tokenCreateTime);
 	$id = mysql_insert_id($con);
-	$userId = $id + 1000000;
+
+	global $USER_ID_BASE;
+	$userId = $USER_ID_BASE + $id;
 
 	echo json_encode(array('status' => '1', 'userId' => $userId, 'loginTime' => $loginTime, 'token' => $token));
 
 	mysql_close($con);
+}
+else
+{
+	echo json_encode(array('status' => '2', 'error' => 'phoneNumber or password null'));
 }
 	
 ?>

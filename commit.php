@@ -9,6 +9,7 @@
 include('simple_html_dom_master_sdk/simple_html_dom.php');
 require_once('qiniu_php_sdk/qiniu/rs.php');
 require_once('qiniu_php_sdk/qiniu/conf.php');
+require_once('function.php');
 
 //echo $showtime=date("Y-m-d H:i:s");
 
@@ -35,29 +36,6 @@ function getGoodsName($html)
 	return $e->content;
 }
 
-// 连接数据库
-function connectDB()
-{
-	$con = mysql_connect("qdm163657130.my3w.com", "qdm163657130", "yc6881090");
-	if(!$con)
-	{
-		die('数据库连接失败：' . mysql_error());
-	}
-	mysql_select_db("qdm163657130_db", $con);
-
-	//mysql_query("SET NAMES 'UTF8'", $con); 
-	//mysql_query("SET CHARACTER SET UTF8", $con); 
-	//mysql_query("SET CHARACTER_SET_RESULTS=UTF8", $con);
-	return $con;
-}
-
-function testUtf($con, $name)
-{
-	$sql = "insert into testUtf1 (name) values ('$name')";
-	
-	mysql_query($sql, $con);
-}
-
 // 添加商品
 function addGoods($con, $price, $goods_url, $create_time, $goods_name, $from_source, $type, $sub_type, $goods_id)
 {
@@ -68,7 +46,6 @@ function addGoods($con, $price, $goods_url, $create_time, $goods_name, $from_sou
 
 function updateGoodsImgUrl($con, $goods_image_url, $id)
 {
-	//$sql = "update goods set goods_image_url=" . $goods_image_url. " where id=" . $id;
 	$sql = "update goods set goods_image_url='$goods_image_url' where id='$id'";
 	mysql_query($sql, $con);
 }
