@@ -10,5 +10,11 @@ echo '<a href="get_goods.php">get goods</a>';
 echo '<br/>';
 echo '<br/>';
 echo '<a href="delete_goods.php">delete goods</a>';
+echo '<br/>';
+echo '<br/>';
+echo '<a href="login_test.html">login</a>';
+echo '<br/>';
+echo '<br/>';
+echo '<a href="register_test.html">register</a>';
 
 ?>

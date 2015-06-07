@@ -20,5 +20,33 @@ function createUserToken($phoneNumber, $password)
 	return $token;
 }
 
+function isValidToken($con, $token)
+{
+	$isValid = false;
+	$tokenCreateTime;
+	$sql = "select * from user where token = '$token'";
+	$res = mysql_query($sql, $con);
+
+	if($row = mysql_fetch_array($res))
+	{
+		$tokenCreateTime = $row['token_create_time'];
+		if((time() - strtotime($tokenCreateTime)) > 360)
+		{
+			$isValid = false;
+		}
+		else
+		{
+			$isValid = true;
+		}
+	}
+	else
+	{
+		$isValid = false;
+	}
+
+	mysql_free_result($res);
+	return $isValid;
+}
+
 
 ?>

@@ -5,29 +5,36 @@
 <body>
 
 <?php 
+require_once('function.php');
 
-function connectDB()
+$token = $_GET["token"];
+
+if(isset($token))
 {
-	$con = mysql_connect("qdm163657130.my3w.com", "qdm163657130", "yc6881090");
-	if(!$con)
+	$con = connectDB();
+	if(isValidToken($con, $token))
 	{
-		die('数据库连接失败：' . mysql_error());
-	}
-	mysql_select_db("qdm163657130_db", $con);
+		$res = mysql_query("select * from goods order by create_time desc");
+		while($row = mysql_fetch_array($res))
+		{
+			//echo $row['post_content'];
+			echo $row['id'] . ' ------ ' . mb_convert_encoding($row['goods_name'], "UTF-8", "GBK");
+			echo '<br/><br/>';
+		}
 
-	$res = mysql_query("select * from goods order by create_time desc");
-	while($row = mysql_fetch_array($res))
-	{
-		//echo $row['post_content'];
-		echo $row['id'] . ' ------ ' . mb_convert_encoding($row['goods_name'], "UTF-8", "GBK");
-		echo '<br/><br/>';
+		mysql_free_result($res);
 	}
-	
+	else
+	{
+		echo 'token not Valid';
+	}
+
 	mysql_close($con);
-	mysql_free_result($res);
 }
-
-connectDB();
+else
+{
+	echo 'token null';
+}
 
 ?>  
 </body>
