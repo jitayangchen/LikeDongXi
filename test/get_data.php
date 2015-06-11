@@ -14,7 +14,7 @@ if(isset($token))
 	$con = connectDB();
 	if(isValidToken($con, $token))
 	{
-		$res = mysql_query("select * from goods order by create_time desc");
+		$res = mysql_query("select * from tr_goods order by create_time desc");
 		while($row = mysql_fetch_array($res))
 		{
 			//echo $row['post_content'];

@@ -23,7 +23,7 @@ function connectDB()
 
 function queryGoodsImageKeyByGoodsId($con, $goods_id)
 {
-	$sql = "SELECT * FROM goods_images WHERE goods_id='$goods_id'";
+	$sql = "SELECT * FROM tr_goods_images WHERE goods_id='$goods_id'";
 	$result = mysql_query($sql, $con);
 
 	$imgKeyArr = array();
@@ -41,7 +41,7 @@ function queryGoodsImageKeyByGoodsId($con, $goods_id)
 
 function deleteGoodsImageByGoodsId($con, $goods_id)
 {
-	$sql = "DELETE FROM goods_images WHERE goods_id='$goods_id'";
+	$sql = "DELETE FROM tr_goods_images WHERE goods_id='$goods_id'";
 	$result = mysql_query($sql, $con);
 	echo 'deleteGoodsImageByGoodsId___  ' . $result . '<br/>';
 	return $result;
@@ -49,7 +49,7 @@ function deleteGoodsImageByGoodsId($con, $goods_id)
 
 function deleteGoodsByGoodsId($con, $goods_id)
 {
-	$sql = "DELETE FROM goods WHERE id='$goods_id'";
+	$sql = "DELETE FROM tr_goods WHERE id='$goods_id'";
 	$result = mysql_query($sql, $con);
 	echo 'deleteGoodsByGoodsId___  ' . $result . '<br/>';
 	return $result;

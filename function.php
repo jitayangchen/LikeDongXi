@@ -24,7 +24,7 @@ function isValidToken($con, $token)
 {
 	$isValid = false;
 	$tokenCreateTime;
-	$sql = "select * from user where token = '$token'";
+	$sql = "select * from tr_user where token = '$token'";
 	$res = mysql_query($sql, $con);
 
 	if($row = mysql_fetch_array($res))

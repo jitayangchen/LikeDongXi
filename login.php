@@ -5,14 +5,14 @@ require_once('config.php');
 function updateToken($con, $id, $token)
 {
 	$tokenCreateTime = date("Y-m-d H:i:s");
-	$sql = "update user set token='$token', token_create_time='$tokenCreateTime' where id='$id'";
+	$sql = "update tr_user set token='$token', token_create_time='$tokenCreateTime' where id='$id'";
 	mysql_query($sql, $con);
 }
 
 // 用户登录
 function login($con, $phoneNumber, $password)
 {
-	$sql = "select * from user where phone_number = '$phoneNumber'";
+	$sql = "select * from tr_user where phone_number = '$phoneNumber'";
 	
 	$res = mysql_query($sql, $con);
 

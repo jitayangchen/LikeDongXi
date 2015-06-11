@@ -9,7 +9,7 @@ $commentUserAvatar = $_POST["comment_user_avatar"];
 
 function addComment($commentId, $commentContent, $goodsId, $commentUserId, $commentUserNickname, $commentUserAvatar, $commentTime)
 {
-	$sql = "insert into comments (comment_id, comment_content, goods_id, comment_user_id, comment_user_nickname, comment_user_avatar, comment_time) values ('$commentId', '$commentContent', '$goodsId', '$commentUserId', '$commentUserNickname', '$commentUserAvatar', '$commentTime')";
+	$sql = "insert into tr_comments (comment_id, comment_content, goods_id, comment_user_id, comment_user_nickname, comment_user_avatar, comment_time) values ('$commentId', '$commentContent', '$goodsId', '$commentUserId', '$commentUserNickname', '$commentUserAvatar', '$commentTime')";
 	
 	mysql_query($sql, $con);
 }

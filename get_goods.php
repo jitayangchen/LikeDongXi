@@ -3,7 +3,7 @@ require_once('function.php');
 
 $con = connectDB();
 
-$sql = "select * from goods order by id desc";
+$sql = "select * from tr_goods order by id desc";
 $result = mysql_query($sql, $con);
 
 $goodsList = array();

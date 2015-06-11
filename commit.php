@@ -39,21 +39,21 @@ function getGoodsName($html)
 // 添加商品
 function addGoods($con, $price, $goods_url, $create_time, $goods_name, $from_source, $type, $sub_type, $goods_id)
 {
-	$sql = "insert into goods (price, goods_url, create_time, goods_name, from_source, type, sub_type, goods_id) values ('$price', '$goods_url', '$create_time', '$goods_name', '$from_source', '$type', '$sub_type', '$goods_id')";
+	$sql = "insert into tr_goods (price, goods_url, create_time, goods_name, from_source, type, sub_type, goods_id) values ('$price', '$goods_url', '$create_time', '$goods_name', '$from_source', '$type', '$sub_type', '$goods_id')";
 	
 	mysql_query($sql, $con);
 }
 
 function updateGoodsImgUrl($con, $goods_image_url, $id)
 {
-	$sql = "update goods set goods_image_url='$goods_image_url' where id='$id'";
+	$sql = "update tr_goods set goods_image_url='$goods_image_url' where id='$id'";
 	mysql_query($sql, $con);
 }
 
 // 添加商品图片
 function addGoodsImg($con, $goods_id, $image_url, $save_source, $create_time)
 {
-	$sql = "insert into goods_images (goods_id, image_url, save_source, create_time) values ('$goods_id', '$image_url', '$save_source', '$create_time')";
+	$sql = "insert into tr_goods_images (goods_id, image_url, save_source, create_time) values ('$goods_id', '$image_url', '$save_source', '$create_time')";
 	
 	mysql_query($sql, $con);
 }
