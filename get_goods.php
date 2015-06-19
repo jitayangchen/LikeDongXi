@@ -22,8 +22,10 @@ while($row = mysql_fetch_array($result))
 	$likeNumber = $row['like_number'];
 	$commentNumber = $row['comment_number'];
 	$goodsImageUrl = $row['goods_image_url'];
-	$goodsName = mb_convert_encoding($row['goods_name'], "UTF-8", "GBK");
-	//echo 'goodsId = ' . $goodsId . '<br/>';
+//	$goodsName = mb_convert_encoding($row['goods_name'], "UTF-8", "GBK");
+	$goodsName = iconv("GBK", "UTF-8", $row['goods_name']);
+//	$goodsName = $row['goods_name'];
+
 	$goodsArr = array('goodsId' => $goodsId, 
 		'price' => $price,
 		'goodsUrl' => $goodsUrl,
@@ -44,5 +46,9 @@ mysql_close($con);
 mysql_free_result($result);
 
 echo json_encode(array('status' => '1', 'totalCount' => $totalCount, 'goodsList' => $goodsList));
+//$out = json_encode(array('status' => '1', 'totalCount' => $totalCount, 'goodsList' => $goodsList));
+//echo mb_convert_encoding($out, "UTF-8", "GBK");
+
+//echo iconv("GBK", "UTF-8", $out);
 
 ?>
