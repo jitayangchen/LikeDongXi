@@ -1,12 +1,32 @@
 <?php
-require_once('../function.php');
+require_once('function.php');
 
-$content = $_POST['content'];
-
-function addJoke($con, $content, $comment_num, $like_num, $collection_num, $create_time, $user_id, $images_url)
+function getJoke($con)
 {
-	$sql = "insert into pj_jokes (content, comment_num, like_num, collection_num, create_time, user_id, images_url) values ('$content', '$comment_num', '$like_num', '$collection_num', '$create_time', '$user_id', '$images_url')";
+	$sql = "select * from pj_jokes order by create_time desc";
 	
-	mysql_query($sql, $con);
+	return mysql_query($sql, $con);
+	
 }
+
+$con = connectDB();
+
+$result = getJoke($con);
+$jokesList = array();
+
+$i = 0;
+while($row = mysql_fetch_array($result))
+{
+	$jokeContent = iconv("GBK", "UTF-8", $row['content']);
+
+	$jokesArr = array('jokeContent' => $jokeContent);
+	$jokesList[$i++] = $jokesArr;
+}
+$totalCount = mysql_num_rows($result);
+
+echo json_encode(array('status' => '1', 'totalCount' => $totalCount, 'jokesList' => $jokesList));
+
+mysql_close($con);
+mysql_free_result($result);
+
 ?>
