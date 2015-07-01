@@ -13,8 +13,27 @@ function login($con, $phoneNumber, $password)
 
 		if(0 == strcmp($password, $row['password']))
 		{
-			$userId = $row['user_id'];
-			echo json_encode(array('status' => '1', 'userId' => $userId));
+			$userId = iconv("GBK", "UTF-8", $row['user_id']);
+			$nickName = iconv("GBK", "UTF-8", $row['nick_name']);
+			$sex = iconv("GBK", "UTF-8", $row['sex']);
+			$age = iconv("GBK", "UTF-8", $row['age']);
+			$avatar = iconv("GBK", "UTF-8", $row['avatar']);
+			$city = iconv("GBK", "UTF-8", $row['city']);
+			$registerTime = iconv("GBK", "UTF-8", $row['register_time']);
+			$loginTime = iconv("GBK", "UTF-8", $row['login_time']);
+			$loginType = iconv("GBK", "UTF-8", $row['login_type']);
+
+			$userInfo = array('userId' => $userId, 
+					'nickName' => $nickName,
+					'sex' => $sex,
+					'age' => $age,
+					'avatar' => $avatar,
+					'city' => $city,
+					'registerTime' => $registerTime,
+					'loginTime' => $loginTime,
+					'loginType' => $loginType);
+
+			echo json_encode(array('status' => '1', 'userInfo' => $userInfo));
 		}
 		else
 		{
@@ -29,7 +48,7 @@ function login($con, $phoneNumber, $password)
 	mysql_free_result($res);
 }
 
-$phoneNumber = $_POST["phone_number"];
+$phoneNumber = $_POST["phoneNumber"];
 $password = $_POST["password"];
 
 if (isset($phoneNumber) && !empty($phoneNumber) && isset($password) && !empty($password))
