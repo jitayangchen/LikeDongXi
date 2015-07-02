@@ -15,9 +15,13 @@ function addJoke($con, $content, $create_time, $user_id, $images_url)
 if (isset($content) && isset($user_id)) {
 	$con = connectDB();
 	$create_time = date("Y-m-d H:i:s");
+
 	$content = iconv("UTF-8", "GBK", $content);
+	$user_id = iconv("UTF-8", "GBK", $user_id);
+	$images_url = iconv("UTF-8", "GBK", $images_url);
+
 	addJoke($con, $content, $create_time, $user_id, $images_url);
-	echo json_encode(array('status' => '1', 'content' => $content));
+	echo json_encode(array('status' => '1', 'function' => 'addjoke'));
 	mysql_close($con);
 }
 
