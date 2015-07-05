@@ -21,7 +21,8 @@ if (isset($phone_number) && isset($password)) {
 	$nickName = iconv("UTF-8", "GBK", $nickName);
 
 	register($con, $phone_number, $password, $nickName, $register_time);
-	echo json_encode(array('status' => '1'));
+	$userId = mysql_insert_id($con);
+	echo json_encode(array('status' => '1', 'userId' => $userId));
 	mysql_close($con);
 }
 

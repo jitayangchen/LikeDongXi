@@ -1,9 +1,23 @@
 <?php
 require_once('function.php');
 
-function getJoke($con)
+$page = $_GET['page'];
+$limit = $_GET['limit'];
+
+if (!isset($page))
 {
-	$sql = "SELECT pj_jokes.joke_id, pj_jokes.content, pj_jokes.create_time, pj_user.user_id, pj_user.nick_name, pj_user.avatar FROM pj_jokes LEFT JOIN pj_user ON pj_jokes.user_id = pj_user.user_id order by pj_jokes.create_time desc";
+	$page = 1;
+}
+if (!isset($limit))
+{
+	$limit = 20;
+}
+
+$offset = ($page -1) * $limit;
+
+function getJoke($con, $offset, $limit)
+{
+	$sql = "SELECT * FROM pj_jokes LEFT JOIN pj_user ON pj_jokes.user_id = pj_user.user_id order by pj_jokes.joke_id desc LIMIT $offset, $limit";
 //	$sql = "select * from pj_jokes order by create_time desc";
 	
 	return mysql_query($sql, $con);
@@ -12,7 +26,7 @@ function getJoke($con)
 
 $con = connectDB();
 
-$result = getJoke($con);
+$result = getJoke($con, $offset, $limit);
 $jokesList = array();
 
 $i = 0;

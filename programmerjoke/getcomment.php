@@ -3,7 +3,7 @@ require_once('function.php');
 
 function getcomment($con, $jokeId)
 {
-	$sql = "SELECT pj_comment.comment_id, pj_comment.content, pj_comment.user_id, pj_comment.create_time, pj_comment.like_num, pj_user.nick_name, pj_user.avatar FROM pj_comment LEFT JOIN pj_user ON pj_comment.user_id = pj_user.user_id WHERE pj_comment.joke_id = '$jokeId' order by pj_comment.create_time desc";
+	$sql = "SELECT * FROM pj_comment LEFT JOIN pj_user ON pj_comment.user_id = pj_user.user_id WHERE pj_comment.joke_id = '$jokeId' order by pj_comment.comment_id desc";
 //	$sql = "select * from pj_jokes order by create_time desc";
 	
 	return mysql_query($sql, $con);
