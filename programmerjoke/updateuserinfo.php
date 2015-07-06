@@ -1,7 +1,6 @@
 <?php
 require_once('function.php');
 
-// ÓÃ»§µÇÂ¼
 function updateAvatar($con, $avatar, $userId)
 {
 	$sql = "update pj_user set avatar='$avatar' where user_id='$userId'";

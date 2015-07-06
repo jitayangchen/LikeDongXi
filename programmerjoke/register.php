@@ -4,8 +4,9 @@ require_once('function.php');
 $phone_number = $_POST['phone_number'];
 $password = $_POST['password'];
 $nickName = $_POST['nickName'];
+$captcha = $_POST['captcha'];
 
-function register($con, $phone_number, $password, $nickName, $register_time)
+function register($con, $phone_number, $password, $nickName, $register_time, $captcha)
 {
 	$sql = "insert into pj_user (phone_num, password, nick_name, register_time) values ('$phone_number', '$password', '$nickName', '$register_time')";
 	
@@ -19,8 +20,9 @@ if (isset($phone_number) && isset($password)) {
 	$phone_number = iconv("UTF-8", "GBK", $phone_number);
 	$password = iconv("UTF-8", "GBK", $password);
 	$nickName = iconv("UTF-8", "GBK", $nickName);
+	$captcha = iconv("UTF-8", "GBK", $captcha);
 
-	register($con, $phone_number, $password, $nickName, $register_time);
+	register($con, $phone_number, $password, $nickName, $register_time, $captcha);
 	$userId = mysql_insert_id($con);
 	echo json_encode(array('status' => '1', 'userId' => $userId));
 	mysql_close($con);

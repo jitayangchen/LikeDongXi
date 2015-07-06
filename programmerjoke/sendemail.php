@@ -1,8 +1,30 @@
 <?php
 require_once('class.phpmailer.php');
 include('class.smtp.php');
+require_once('function.php');
 
-function postmail($to,$subject = '',$body = ''){
+$email = $_GET["email"];
+$type = $_GET["type"];  // 0:为注册验证      1:为找回密码
+
+$email = iconv("UTF-8", "GBK", $email);
+$type = iconv("UTF-8", "GBK", $type);
+
+$subject;
+$body;
+$code = rand(1000, 9999);
+
+if($type == 0)
+{
+	$subject = '程序员笑话-注册验证';
+	$body = '程序员笑话-注册验证码: ' . $code;
+}
+else
+{
+	$subject = '程序员笑话-找回密码验证';
+	$body = '程序员笑话-找回密码验证码: ' . $code;
+}
+
+function postmail($to, $subject = '', $body = '', $type, $code){
 
     //$to 表示收件人地址 $subject 表示邮件标题 $body表示邮件正文
     //error_reporting(E_ALL);
@@ -32,10 +54,34 @@ function postmail($to,$subject = '',$body = ''){
     //$mail->AddAttachment("images/phpmailer.gif");      // attachment
     //$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
     if(!$mail->Send()) {
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
+//        echo 'Mailer Error: ' . $mail->ErrorInfo;
+		echo json_encode(array('status' => '0', 'error info' => 'send email error', 'function' => 'sendemail.php'));
     } else {
-        echo "Message sent!恭喜，邮件发送成功！";
+		addAccountNumber($to, $type, $code);
+        echo json_encode(array('status' => '1', 'function' => 'sendemail.php'));
     }
 }
 
-postmail('jitayangchen@gmail.com','程序员笑话 测试gmail lalala','测试中文字符 hahaha');
+function addAccountNumber($email, $type, $code)
+{
+	$con = connectDB();
+
+	$create_time = date("Y-m-d H:i:s");
+	$status = 0;
+	$sql;
+
+	if($type == 0)
+	{
+		$sql = "insert into pj_user (email, email_captcha, email_captcha_time, status) values ('$email', '$code', '$create_time', '$status')";
+	}
+	else
+	{
+		$userId = $_GET["userId"];
+		$userId = iconv("UTF-8", "GBK", $userId);
+		$sql = "update pj_user set email_captcha = '$code', email_captcha_time = '$create_time' where user_id='$userId'";
+	}
+	
+	mysql_query($sql, $con);
+}
+
+postmail($email, $subject, $body, $type, $code);
