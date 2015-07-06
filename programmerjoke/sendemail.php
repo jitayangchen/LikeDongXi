@@ -3,7 +3,7 @@ require_once('class.phpmailer.php');
 include('class.smtp.php');
 
 function postmail($to,$subject = '',$body = ''){
-    //Author:Jiucool WebSite: http://www.jiucool.com
+
     //$to 表示收件人地址 $subject 表示邮件标题 $body表示邮件正文
     //error_reporting(E_ALL);
     error_reporting(E_STRICT);
@@ -23,9 +23,9 @@ function postmail($to,$subject = '',$body = ''){
     $mail->Username   = 'android151@163.com';  // SMTP服务器用户名，PS：我乱打的
     $mail->Password   = 'yc15169792295';            // SMTP服务器密码
     $mail->SetFrom('android151@163.com', '程序员笑话');
-    $mail->AddReplyTo('android151@163.com','返回lalala');
+    $mail->AddReplyTo('android151@163.com','程序员笑话');
     $mail->Subject    = $subject;
-    $mail->AltBody    = 'To view the message, please use an HTML compatible email viewer!'; // optional, comment out and test
+    $mail->AltBody    = 'To view the message, please use an HTML compatible email viewer!'; //邮件正文不支持HTML的备用显示 // optional, comment out and test
     $mail->MsgHTML($body);
     $address = $to;
     $mail->AddAddress($address, '');
@@ -38,4 +38,4 @@ function postmail($to,$subject = '',$body = ''){
     }
 }
 
-postmail('jitayangchen@163.com','程序员笑话 测试中文字符 lalala','测试中文字符 hahaha');
+postmail('jitayangchen@gmail.com','程序员笑话 测试gmail lalala','测试中文字符 hahaha');
