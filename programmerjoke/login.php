@@ -2,9 +2,9 @@
 require_once('function.php');
 
 // 用户登录
-function login($con, $phoneNumber, $password)
+function login($con, $accountNumber, $password)
 {
-	$sql = "select * from pj_user where phone_num = '$phoneNumber'";
+	$sql = "select * from pj_user where email = '$accountNumber'";
 	
 	$res = mysql_query($sql, $con);
 
@@ -48,20 +48,20 @@ function login($con, $phoneNumber, $password)
 	mysql_free_result($res);
 }
 
-$phoneNumber = $_POST["phoneNumber"];
+$accountNumber = $_POST["accountNumber"];
 $password = $_POST["password"];
 
-if (isset($phoneNumber) && !empty($phoneNumber) && isset($password) && !empty($password))
+if (isset($accountNumber) && !empty($accountNumber) && isset($password) && !empty($password))
 {
 	$con = connectDB();
 
-	login($con, $phoneNumber, $password);
+	login($con, $accountNumber, $password);
 
 	mysql_close($con);
 }
 else
 {
-	echo json_encode(array('status' => '4', 'error' => 'phoneNumber or password null'));
+	echo json_encode(array('status' => '4', 'error' => 'accountNumber or password null'));
 }
 	
 ?>

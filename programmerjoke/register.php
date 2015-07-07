@@ -33,7 +33,7 @@ function checkCaptcha($con, $accountNumber, $captcha)
 			}
 			else
 			{
-				$isValid = 1;
+				$status = 1;
 			}
 		}
 		else
@@ -93,11 +93,15 @@ if (isset($accountNumber) && isset($password)) {
 		}
 		else if($status == 0)
 		{
-			echo json_encode(array('status' => '0', 'error' => 'captcha invalid', 'function' => 'register.php'));
+			echo json_encode(array('status' => '4', 'error' => 'captcha invalid', 'function' => 'register.php'));
 		}
 		else if($status == 2)
 		{
 			echo json_encode(array('status' => '0', 'error' => 'captcha error', 'function' => 'register.php'));
+		}
+		else
+		{
+			echo json_encode(array('status' => $status, 'error' => 'error', 'function' => 'register.php'));
 		}
 	}
 	else
