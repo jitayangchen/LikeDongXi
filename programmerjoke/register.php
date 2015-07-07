@@ -1,31 +1,113 @@
 <?php
 require_once('function.php');
 
-$phone_number = $_POST['phone_number'];
+$accountNumber = $_POST['accountNumber'];
+$captcha = $_POST['captcha'];
 $password = $_POST['password'];
 $nickName = $_POST['nickName'];
-$captcha = $_POST['captcha'];
 
-function register($con, $phone_number, $password, $nickName, $register_time, $captcha)
+// 注册
+function register($con, $email, $password, $nickName, $registerTime, $captcha)
 {
-	$sql = "insert into pj_user (phone_num, password, nick_name, register_time) values ('$phone_number', '$password', '$nickName', '$register_time')";
+	$sql = "insert into pj_user (email, password, nick_name, register_time) values ('$email', '$password', '$nickName', '$registerTime')";
 	
 	mysql_query($sql, $con);
 }
 
-if (isset($phone_number) && isset($password)) {
-	$con = connectDB();
-	$register_time = date("Y-m-d H:i:s");
+// 检查验证码是否正确
+function checkCaptcha($con, $accountNumber, $captcha)
+{
+	$status = -1;  // 0：验证码失效    1：验证码正确   2：验证码错误
+	$captchaCreateTime;
+	$sql = "select * from pj_captcha where email = '$accountNumber'";
+	$res = mysql_query($sql, $con);
 
-	$phone_number = iconv("UTF-8", "GBK", $phone_number);
-	$password = iconv("UTF-8", "GBK", $password);
-	$nickName = iconv("UTF-8", "GBK", $nickName);
-	$captcha = iconv("UTF-8", "GBK", $captcha);
+	if($row = mysql_fetch_array($res))
+	{
+		$captchaCreateTime = $row['email_captcha_time'];
+		if(0 == strcmp($captcha, $row['email_captcha']))
+		{
+			if((time() - strtotime($captchaCreateTime)) > 1800)
+			{
+				$status = 0;
+			}
+			else
+			{
+				$isValid = 1;
+			}
+		}
+		else
+		{
+			$status = 2;
+		}
+	}
+	else
+	{
+		$status = 2;
+	}
 
-	register($con, $phone_number, $password, $nickName, $register_time, $captcha);
-	$userId = mysql_insert_id($con);
-	echo json_encode(array('status' => '1', 'userId' => $userId));
-	mysql_close($con);
+	mysql_free_result($res);
+	return $status;
 }
 
+// 检查账户是否存在
+function existent($con, $email)
+{
+	$isExistent;
+	$sql = "select * from pj_user where email = '$email'";
+	
+	$res = mysql_query($sql, $con);
+
+	if($row = mysql_fetch_array($res))
+	{
+		$isExistent = true;
+	}
+	else
+	{
+		$isExistent = false;
+	}
+	mysql_free_result($res);
+	return $isExistent;
+}
+
+if (isset($accountNumber) && isset($password)) {
+
+	$con = connectDB();
+
+	$accountNumber = iconv("UTF-8", "GBK", $accountNumber);
+	$captcha = iconv("UTF-8", "GBK", $captcha);
+
+	if(!existent($con, $accountNumber)) {
+		$status = checkCaptcha($con, $accountNumber, $captcha);
+
+		if($status == 1)
+		{
+			$registerTime = date("Y-m-d H:i:s");
+
+			$password = iconv("UTF-8", "GBK", $password);
+			$nickName = iconv("UTF-8", "GBK", $nickName);
+
+			register($con, $accountNumber, $password, $nickName, $registerTime, $captcha);
+			$userId = mysql_insert_id($con);
+			echo json_encode(array('status' => '1', 'userId' => $userId, 'function' => 'register.php'));
+		}
+		else if($status == 0)
+		{
+			echo json_encode(array('status' => '0', 'error' => 'captcha invalid', 'function' => 'register.php'));
+		}
+		else if($status == 2)
+		{
+			echo json_encode(array('status' => '0', 'error' => 'captcha error', 'function' => 'register.php'));
+		}
+	}
+	else
+	{
+		echo json_encode(array('status' => '2', 'error' => 'account existent', 'function' => 'register.php'));
+	}
+	mysql_close($con);
+}
+else
+{
+	echo json_encode(array('status' => '3', 'error' => 'error', 'function' => 'register.php'));
+}
 ?>
