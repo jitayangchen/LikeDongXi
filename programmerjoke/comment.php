@@ -7,7 +7,7 @@ $userId = $_POST['userId'];
 
 function addComment($con, $content, $jokeId, $userId, $createTime)
 {
-	$sql = "insert into pj_comment (content, joke_id, user_id, create_time) values ('$content', '$jokeId', '$userId', '$createTime')";
+	$sql = "INSERT INTO pj_comment (content, joke_id, user_id, create_time) VALUES ('$content', '$jokeId', '$userId', '$createTime')";
 	
 	mysql_query($sql, $con);
 }

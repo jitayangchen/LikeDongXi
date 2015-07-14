@@ -4,7 +4,13 @@ require_once('function.php');
 // 用户登录
 function login($con, $accountNumber, $password)
 {
-	$sql = "select * from pj_user where email = '$accountNumber'";
+
+    // 检查电邮地址语法是否有效
+    if (preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/", $accountNumber)) {
+		$sql = "SELECT * FROM pj_user WHERE email = '$accountNumber'";
+    } else {
+		$sql = "SELECT * FROM pj_user WHERE phone_num = '$accountNumber'";
+	}
 	
 	$res = mysql_query($sql, $con);
 

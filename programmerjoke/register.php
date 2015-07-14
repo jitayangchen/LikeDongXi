@@ -9,7 +9,7 @@ $nickName = $_POST['nickName'];
 // 注册
 function register($con, $email, $password, $nickName, $registerTime, $captcha)
 {
-	$sql = "insert into pj_user (email, password, nick_name, register_time) values ('$email', '$password', '$nickName', '$registerTime')";
+	$sql = "INSERT INTO pj_user (email, password, nick_name, register_time) VALUES ('$email', '$password', '$nickName', '$registerTime')";
 	
 	mysql_query($sql, $con);
 }
@@ -19,7 +19,7 @@ function checkCaptcha($con, $accountNumber, $captcha)
 {
 	$status = -1;  // 0：验证码失效    1：验证码正确   2：验证码错误
 	$captchaCreateTime;
-	$sql = "select * from pj_captcha where email = '$accountNumber'";
+	$sql = "SELECT * FROM pj_captcha WHERE email = '$accountNumber'";
 	$res = mysql_query($sql, $con);
 
 	if($row = mysql_fetch_array($res))
@@ -54,7 +54,7 @@ function checkCaptcha($con, $accountNumber, $captcha)
 function existent($con, $email)
 {
 	$isExistent;
-	$sql = "select * from pj_user where email = '$email'";
+	$sql = "SELECT * FROM pj_user WHERE email = '$email'";
 	
 	$res = mysql_query($sql, $con);
 

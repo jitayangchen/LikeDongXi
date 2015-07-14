@@ -7,7 +7,7 @@ $images_url = $_POST['images_url'];
 
 function addJoke($con, $content, $create_time, $user_id, $images_url)
 {
-	$sql = "insert into pj_jokes (content, create_time, user_id, images_url) values ('$content', '$create_time', '$user_id', '$images_url')";
+	$sql = "INSERT INTO pj_jokes (content, create_time, user_id, images_url) VALUES ('$content', '$create_time', '$user_id', '$images_url')";
 	
 	mysql_query($sql, $con);
 }

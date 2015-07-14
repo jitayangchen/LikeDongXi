@@ -28,17 +28,17 @@ function addAccountNumber($email, $type, $code)
 	$email = iconv("UTF-8", "GBK", $email);
 	$create_time = date("Y-m-d H:i:s");
 
-	$sql = "select * from pj_captcha where email = '$email'";
+	$sql = "SELECT * from pj_captcha WHERE email = '$email'";
 	
 	$res = mysql_query($sql, $con);
 
 	if($row = mysql_fetch_array($res))
 	{
-		$sql = "update pj_captcha set email_captcha = '$code', email_captcha_time = '$create_time' where email='$email'";
+		$sql = "UPDATE pj_captcha SET email_captcha = '$code', email_captcha_time = '$create_time' WHERE email='$email'";
 	}
 	else
 	{
-		$sql = "insert into pj_captcha (email, email_captcha, email_captcha_time) values ('$email', '$code', '$create_time')";
+		$sql = "INSERT INTO pj_captcha (email, email_captcha, email_captcha_time) VALUES ('$email', '$code', '$create_time')";
 	}
 	mysql_query($sql, $con);
 	mysql_free_result($res);

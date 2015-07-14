@@ -3,7 +3,7 @@ require_once('function.php');
 
 function updateAvatar($con, $avatar, $userId)
 {
-	$sql = "update pj_user set avatar='$avatar' where user_id='$userId'";
+	$sql = "UPDATE pj_user SET avatar='$avatar' WHERE user_id='$userId'";
 	mysql_query($sql, $con);
 }
 
