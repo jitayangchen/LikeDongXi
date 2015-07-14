@@ -17,7 +17,7 @@ $offset = ($page -1) * $limit;
 
 function getJoke($con, $offset, $limit)
 {
-	$sql = "SELECT * FROM pj_jokes LEFT JOIN pj_user ON pj_jokes.user_id = pj_user.user_id order by pj_jokes.joke_id desc LIMIT $offset, $limit";
+	$sql = "SELECT * FROM pj_jokes LEFT JOIN pj_user ON pj_jokes.user_id = pj_user.user_id ORDER BY pj_jokes.joke_id DESC LIMIT $offset, $limit";
 //	$sql = "select * from pj_jokes order by create_time desc";
 	
 	return mysql_query($sql, $con);
