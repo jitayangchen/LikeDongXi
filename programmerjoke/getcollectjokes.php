@@ -18,7 +18,13 @@ $offset = ($page -1) * $limit;
 
 function getCollectJoke($con, $userId, $offset, $limit)
 {
-	$sql = "SELECT * FROM pj_jokes LEFT JOIN pj_collect_joke ON pj_jokes.joke_id = pj_collect_joke.joke_id WHERE pj_collect_joke.user_id = $userId ORDER BY pj_collect_joke.id DESC LIMIT $offset, $limit";
+	$sql = "SELECT Q1.joke_id, Q1.content, Q1.create_time, Q1.user_id, pj_user.avatar, pj_user.nick_name FROM 
+	(
+		SELECT pj_jokes.joke_id, pj_jokes.content, pj_jokes.create_time, pj_jokes.user_id FROM pj_collect_and_like LEFT JOIN pj_jokes ON 
+		pj_collect_and_like.joke_id = pj_jokes.joke_id 
+		WHERE pj_collect_and_like.user_id = '$userId' AND iscollect = 1 
+		ORDER BY pj_collect_and_like.id DESC LIMIT $offset, $limit
+	) AS Q1 LEFT JOIN pj_user ON Q1.user_id = pj_user.user_id";
 	
 	return mysql_query($sql, $con);
 	
