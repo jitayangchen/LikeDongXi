@@ -62,8 +62,6 @@ while($row = mysql_fetch_array($result))
 	$nickName = iconv("GBK", "UTF-8", $row['nick_name']);
 	$avatar = iconv("GBK", "UTF-8", $row['avatar']);
 	$islike = $row['islike'];
-	$likeCount = $row['like_count'];
-	$collectCount = $row['collect_count'];
 
 	$jokesArr = array('jokeId' => $jokeId,
 						'jokeContent' => $jokeContent,
@@ -71,9 +69,7 @@ while($row = mysql_fetch_array($result))
 						'userId' => $userId,
 						'nickName' => $nickName,
 						'avatar' => $avatar,
-						'islike' => $islike,
-						'likeCount' => $likeCount,
-						'collectCount' => $collectCount);
+						'islike' => $islike);
 	$jokesList[$i++] = $jokesArr;
 }
 $totalCount = mysql_num_rows($result);
