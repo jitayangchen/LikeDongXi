@@ -39,16 +39,16 @@ function login($con, $accountNumber, $password)
 					'loginTime' => $loginTime,
 					'loginType' => $loginType);
 
-			echo json_encode(array('status' => '1', 'userInfo' => $userInfo, 'function' => 'login.php'));
+			echo json_encode(array('status' => '1', 'userInfo' => $userInfo));
 		}
 		else
 		{
-			echo json_encode(array('status' => '2', 'error' => 'password error', 'function' => 'login.php'));
+			echo json_encode(array('status' => '2', 'error' => 'password error'));
 		}
 	}
 	else
 	{
-		echo json_encode(array('status' => '3', 'error' => 'user non-existent', 'function' => 'login.php'));
+		echo json_encode(array('status' => '3', 'error' => 'user non-existent'));
 	}
 
 	mysql_free_result($res);
@@ -67,7 +67,7 @@ if (isset($accountNumber) && !empty($accountNumber) && isset($password) && !empt
 }
 else
 {
-	echo json_encode(array('status' => '4', 'error' => 'accountNumber or password null', 'function' => 'login.php'));
+	echo json_encode(array('status' => '4', 'error' => 'accountNumber or password null'));
 }
 	
 ?>

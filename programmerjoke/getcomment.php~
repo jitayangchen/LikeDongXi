@@ -37,7 +37,7 @@ while($row = mysql_fetch_array($result))
 }
 $totalCount = mysql_num_rows($result);
 
-echo json_encode(array('status' => '1', 'totalCount' => $totalCount, 'commentList' => $commentList, 'function' => 'getcomment.php'));
+echo json_encode(array('status' => '1', 'totalCount' => $totalCount, 'function' => 'getcomment.php', 'commentList' => $commentList));
 
 mysql_close($con);
 mysql_free_result($result);

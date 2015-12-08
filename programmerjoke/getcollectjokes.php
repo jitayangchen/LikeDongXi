@@ -18,12 +18,12 @@ $offset = ($page -1) * $limit;
 
 function getCollectJoke($con, $userId, $offset, $limit)
 {
-	$sql = "SELECT Q2.joke_id, Q2.content, Q2.create_time, Q2.user_id, Q2.islike, Q2.collect_count, Q2.like_count, pj_user.avatar, pj_user.nick_name FROM 
+	$sql = "SELECT Q2.joke_id, Q2.content, Q2.create_time, Q2.user_id, Q2.images_url, Q2.islike, Q2.collect_count, Q2.like_count, pj_user.avatar, pj_user.nick_name FROM 
 (
 
-	SELECT Q1.joke_id, Q1.content, Q1.create_time, Q1.user_id, Q1.islike, IFNULL(P2.collect_count, 0) AS collect_count, IFNULL(P2.like_count, 0) AS like_count FROM 
+	SELECT Q1.joke_id, Q1.content, Q1.create_time, Q1.user_id, Q1.images_url, Q1.islike, IFNULL(P2.collect_count, 0) AS collect_count, IFNULL(P2.like_count, 0) AS like_count FROM 
 	(
-		SELECT pj_jokes.joke_id, pj_jokes.content, pj_jokes.create_time, pj_jokes.user_id, IFNULL(pj_collect_and_like.islike, 0) AS islike FROM pj_collect_and_like LEFT JOIN pj_jokes ON 
+		SELECT pj_jokes.joke_id, pj_jokes.content, pj_jokes.create_time, pj_jokes.user_id, pj_jokes.images_url, IFNULL(pj_collect_and_like.islike, 0) AS islike FROM pj_collect_and_like LEFT JOIN pj_jokes ON 
 		pj_collect_and_like.joke_id = pj_jokes.joke_id 
 		WHERE pj_collect_and_like.user_id = '$userId' AND pj_collect_and_like.iscollect = 1 
 		ORDER BY pj_collect_and_like.id DESC LIMIT $offset, $limit
@@ -64,6 +64,7 @@ while($row = mysql_fetch_array($result))
 	$islike = $row['islike'];
 	$likeCount = $row['like_count'];
 	$collectCount = $row['collect_count'];
+	$imagesUrl = $row['images_url'] . "?imageView2/2/w/800/h/800/q/100/format/JPG";
 
 	$jokesArr = array('jokeId' => $jokeId,
 						'jokeContent' => $jokeContent,
@@ -73,7 +74,8 @@ while($row = mysql_fetch_array($result))
 						'avatar' => $avatar,
 						'islike' => $islike,
 						'likeCount' => $likeCount,
-						'collectCount' => $collectCount);
+						'collectCount' => $collectCount,
+						'imagesUrl' => $imagesUrl);
 	$jokesList[$i++] = $jokesArr;
 }
 $totalCount = mysql_num_rows($result);
