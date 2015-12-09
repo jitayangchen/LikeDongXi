@@ -73,7 +73,7 @@ while($row = mysql_fetch_array($result))
 	$iscollect = $row['iscollect'];
 	$likeCount = $row['like_count'];
 	$collectCount = $row['collect_count'];
-	$imagesUrl = $row['images_url'] + "?imageView2/2/w/800/h/800/q/100/format/JPG";
+	$imagesUrl = $row['images_url'];
 
 	$jokesArr = array('jokeId' => $jokeId,
 						'jokeContent' => $jokeContent,
@@ -90,7 +90,7 @@ while($row = mysql_fetch_array($result))
 }
 $totalCount = mysql_num_rows($result);
 
-echo json_encode(array('status' => '1', 'totalCount' => $totalCount, 'jokesList' => $jokesList, 'function' => 'getpublishedjokes.php'));
+echo json_encode(array('status' => '1', 'imageType' => '?imageView2/2/w/800/h/800/q/100/format/JPG', 'totalCount' => $totalCount, 'jokesList' => $jokesList, 'function' => 'getpublishedjokes.php'));
 
 mysql_close($con);
 mysql_free_result($result);

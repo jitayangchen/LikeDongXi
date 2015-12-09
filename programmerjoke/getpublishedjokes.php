@@ -73,7 +73,7 @@ while($row = mysql_fetch_array($result))
 	$iscollect = $row['iscollect'];
 	$likeCount = $row['like_count'];
 	$collectCount = $row['collect_count'];
-	$imagesUrl = $row['images_url'] . "?imageView2/2/w/800/h/800/q/100/format/JPG";
+	$imagesUrl = $row['images_url'];
 
 	$jokesArr = array('jokeId' => $jokeId,
 						'jokeContent' => $jokeContent,
